@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "seed": "tsx src/seeds/importCsv.ts",
+    "generate-reports": "tsx src/seeds/generateReports.ts"
   },
   "keywords": [],
   "author": "",

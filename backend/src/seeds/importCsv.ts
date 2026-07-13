@@ -36,6 +36,16 @@ const parseString = (value: string): string | null => {
 
 const importData = async () => {
   await connectDB();
+
+  //skip if data already exists
+  const existingCount = await Score.countDocuments();
+  if (existingCount > 0) {
+    console.log(
+      `Seed skipped: ${existingCount} documents already exist in 'scores' collection.`,
+    );
+    process.exit(0);
+  }
+
   console.log("Starting CSV import process. This may take a few minutes...");
 
   let batch: AnyBulkWriteOperation<IScore>[] = [];
@@ -75,11 +85,16 @@ const importData = async () => {
         if (error.code === 11000) {
           totalInserted += error.insertedCount || 0;
         } else {
-          console.error(`Batch insert error at row ${totalProcessed}:`, error.message);
+          console.error(
+            `Batch insert error at row ${totalProcessed}:`,
+            error.message,
+          );
         }
       }
-      
-      console.log(`Processed: ${totalProcessed} rows | Inserted: ${totalInserted} records`);
+
+      console.log(
+        `Processed: ${totalProcessed} rows | Inserted: ${totalInserted} records`,
+      );
       batch = [];
     }
   }
@@ -99,12 +114,14 @@ const importData = async () => {
 
   console.log("---------------------------------------------------");
   console.log(`Import completed. Total CSV rows read: ${totalProcessed}`);
-  console.log(`Total records successfully inserted into MongoDB: ${totalInserted}`);
-  
+  console.log(
+    `Total records successfully inserted into MongoDB: ${totalInserted}`,
+  );
+
   const finalCount = await Score.countDocuments();
   console.log(`Current total documents in 'scores' collection: ${finalCount}`);
   console.log("---------------------------------------------------");
-  
+
   process.exit(0);
 };
 
