@@ -32,3 +32,27 @@ export const getScoreDistribution = async () => {
 
   return formattedResult;
 };
+
+export const getTopGroupA = async () => {
+  const groupA = subjectManager.getGroupA();
+  
+  const matchConditions: Record<string, any> = {};
+  const addArray: string[] = [];
+  const projectFields: Record<string, number> = { _id: 0, sbd: 1, totalScore: 1 };
+
+  for (const subject of groupA) {
+    matchConditions[subject.key] = { $ne: null };
+    addArray.push(`$${subject.key}`);
+    projectFields[subject.key] = 1;
+  }
+
+  const top10 = await Score.aggregate([
+    { $match: matchConditions },
+    { $addFields: { totalScore: { $add: addArray } } },
+    { $sort: { totalScore: -1, sbd: 1 } },
+    { $limit: 10 },
+    { $project: projectFields }
+  ]).allowDiskUse(true);
+
+  return top10;
+};
