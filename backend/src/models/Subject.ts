@@ -4,7 +4,7 @@ export class Subject {
   constructor(
     public readonly key: keyof IScore,
     public readonly displayName: string,
-    public readonly code: string
+    public readonly code: string,
   ) {}
 
   getScoreFromRecord(record: Partial<IScore>): number | null {
@@ -14,10 +14,10 @@ export class Subject {
 }
 
 export class SubjectManager {
-  private subjects: Map<string, Subject>;
+  private subjects: Map<keyof IScore, Subject>;
 
   constructor() {
-    this.subjects = new Map<string, Subject>();
+    this.subjects = new Map<keyof IScore, Subject>();
     this.initializeSubjects();
   }
 
@@ -35,7 +35,7 @@ export class SubjectManager {
     ];
 
     for (const subject of subjectList) {
-      this.subjects.set(subject.key as string, subject);
+      this.subjects.set(subject.key, subject);
     }
   }
 
@@ -43,7 +43,7 @@ export class SubjectManager {
     return Array.from(this.subjects.values());
   }
 
-  public getByKey(key: string): Subject | null {
+  public getByKey(key: keyof IScore): Subject | null {
     return this.subjects.get(key) || null;
   }
 
