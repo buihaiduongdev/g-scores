@@ -3,6 +3,7 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { SearchScores } from './pages/SearchScores';
 import { Reports } from './pages/Reports';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
   const [activeTab, setActiveTab] = useState('search');
@@ -31,9 +32,11 @@ function App() {
 
             {activeTab === 'reports' && <Reports />}
 
-            {(activeTab === 'dashboard' || activeTab === 'settings') && (
+            {activeTab === 'dashboard' && <Dashboard />}
+
+            {activeTab === 'settings' && (
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-                <h3 className="text-2xl font-extrabold text-slate-900 capitalize mb-4">{activeTab} Module</h3>
+                <h3 className="text-2xl font-extrabold text-slate-900 capitalize mb-4">Settings</h3>
                 <p className="text-slate-500">This module is currently under development.</p>
               </div>
             )}
