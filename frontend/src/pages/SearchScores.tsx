@@ -23,7 +23,7 @@ export function SearchScores() {
   return (
     <>
       <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-indigo-50 to-transparent rounded-bl-full -z-0 opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-bl from-indigo-50 to-transparent rounded-bl-full z-0 opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
 
         <div className="relative z-10">
           <h3 className="text-2xl font-extrabold text-slate-900 mb-2">

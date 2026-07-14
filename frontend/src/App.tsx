@@ -6,23 +6,29 @@ import { Reports } from './pages/Reports';
 
 function App() {
   const [activeTab, setActiveTab] = useState('search');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-[#F8FAFC] font-sans overflow-hidden text-slate-800">
-      
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       {/* Main Layout */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        
-        <Header activeTab={activeTab} />
+
+        <Header activeTab={activeTab} onMenuToggle={() => setSidebarOpen(true)} />
 
         {/* Scrollable Content Area */}
-        <main className="flex-1 p-8 lg:p-12 overflow-y-auto">
+        <main className="flex-1 p-6 lg:p-12 overflow-y-auto">
           <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            
+
             {activeTab === 'search' && <SearchScores />}
-            
+
             {activeTab === 'reports' && <Reports />}
 
             {(activeTab === 'dashboard' || activeTab === 'settings') && (
