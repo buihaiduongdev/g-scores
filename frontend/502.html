@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống đang khởi tạo...</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .loader {
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 { font-size: 24px; margin-bottom: 8px; }
+        p { color: #64748b; max-width: 400px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <h1>Hệ thống đang khởi tạo...</h1>
+    <p>G-Scores đang xử lý và nạp dữ liệu hơn 1 triệu thí sinh (Chỉ xảy ra ở lần chạy đầu tiên). Quá trình này mất khoảng 1-2 phút.<br><br><b>Vui lòng chờ một lát rồi làm mới (F5) lại trang nhé!</b></p>
+</body>
+</html>

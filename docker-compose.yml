@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - g-scores-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGODB_URI=mongodb://mongodb:27017/g-scores
+      - CORS_ORIGIN=*
+      - CSV_FILE_PATH=/app/src/seeds/dataset/diem_thi_thpt_2024.csv
+    command: sh -c "node dist/seeds/importCsv.js && node dist/seeds/generateReports.js && node dist/server.js"
+    depends_on:
+      - mongodb
+    networks:
+      - g-scores-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - g-scores-network
+
+networks:
+  g-scores-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

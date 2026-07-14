@@ -57,7 +57,13 @@ export const useReports = () => {
         setDistributionData(processedDist);
         setTopGroupA(topRes.data.data);
       } catch (err: any) {
-        setError(err.response?.data?.error || "Failed to load reports.");
+        if (err.response?.status === 502) {
+          setError(
+            "Hệ thống đang import dữ liệu lớn (>1 triệu bản ghi) cho lần chạy đầu tiên (khoảng 1-2 phút). Vui lòng chờ và F5 lại trang...",
+          );
+        } else {
+          setError(err.response?.data?.error || "Failed to load reports.");
+        }
       } finally {
         setLoading(false);
       }

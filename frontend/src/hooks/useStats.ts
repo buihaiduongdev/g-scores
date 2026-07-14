@@ -16,7 +16,15 @@ export const useStats = () => {
     api
       .get("/reports/stats")
       .then((res) => setStats(res.data))
-      .catch(() => setError("Failed to load stats."))
+      .catch((err) => {
+        if (err.response?.status === 502) {
+          setError(
+            "Hệ thống đang import dữ liệu lớn (>1 triệu bản ghi) cho lần chạy đầu tiên (khoảng 1-2 phút). Vui lòng chờ và F5 lại trang...",
+          );
+        } else {
+          setError("Failed to load stats.");
+        }
+      })
       .finally(() => setLoading(false));
   }, []);
 

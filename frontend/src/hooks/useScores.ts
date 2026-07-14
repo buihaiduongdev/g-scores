@@ -27,10 +27,16 @@ export const useScores = () => {
       const response = await api.get(`/scores/${sbd}`);
       setScoreData(response.data);
     } catch (err: any) {
-      setError(
-        err.response?.data?.error ||
-          "Failed to fetch score data. Please try again later.",
-      );
+      if (err.response?.status === 502) {
+        setError(
+          "Hệ thống đang import dữ liệu lớn (>1 triệu bản ghi) cho lần chạy đầu tiên (khoảng 1-2 phút). Vui lòng chờ và F5 lại trang...",
+        );
+      } else {
+        setError(
+          err.response?.data?.error ||
+            "Failed to fetch score data. Please try again later.",
+        );
+      }
     } finally {
       setLoading(false);
     }
