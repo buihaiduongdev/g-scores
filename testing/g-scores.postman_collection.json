@@ -1,0 +1,169 @@
+{
+  "info": {
+    "name": "G-Scores API Tests",
+    "description": "Integration tests for G-Scores API covering all must-have features, edge cases, and timings.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/health", "host": ["http", "localhost"], "port": "3001", "path": ["api", "health"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response time is fast', function () { pm.expect(pm.response.responseTime).to.be.below(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Get Score - Valid",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/scores/01000001", "host": ["http", "localhost"], "port": "3001", "path": ["api", "scores", "01000001"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Contains sbd', function () { var jsonData = pm.response.json(); pm.expect(jsonData.sbd).to.eql('01000001'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Get Score - Not Found",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/scores/99999999", "host": ["http", "localhost"], "port": "3001", "path": ["api", "scores", "99999999"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Get Score - Too Short",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/scores/123", "host": ["http", "localhost"], "port": "3001", "path": ["api", "scores", "123"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Get Score - Non-Digit",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/scores/abcdefgh", "host": ["http", "localhost"], "port": "3001", "path": ["api", "scores", "abcdefgh"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Get Score - Empty",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/scores/", "host": ["http", "localhost"], "port": "3001", "path": ["api", "scores", ""] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Get Score Distribution",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/reports/score-distribution", "host": ["http", "localhost"], "port": "3001", "path": ["api", "reports", "score-distribution"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response time is fast (cache)', function () { pm.expect(pm.response.responseTime).to.be.below(500); });",
+              "pm.test('Has data array', function () { var jsonData = pm.response.json(); pm.expect(jsonData.data).to.be.an('array'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Get Top Group A",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/reports/top-group-a", "host": ["http", "localhost"], "port": "3001", "path": ["api", "reports", "top-group-a"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Has exactly 10 students', function () { var jsonData = pm.response.json(); pm.expect(jsonData.data).to.have.lengthOf(10); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Get Stats",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/reports/stats", "host": ["http", "localhost"], "port": "3001", "path": ["api", "reports", "stats"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response time is fast (estimatedCount)', function () { pm.expect(pm.response.responseTime).to.be.below(500); });",
+              "pm.test('Total students is positive', function () { var jsonData = pm.response.json(); pm.expect(jsonData.totalStudents).to.be.above(0); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

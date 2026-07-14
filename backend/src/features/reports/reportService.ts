@@ -13,7 +13,7 @@ export const getTopGroupA = async () => {
 
 export const getStats = async () => {
   const [totalStudents, topGroupACache] = await Promise.all([
-    Score.countDocuments(),
+    Score.estimatedDocumentCount(),
     ReportCache.findOne({ reportType: "top_group_a" }),
   ]);
 
