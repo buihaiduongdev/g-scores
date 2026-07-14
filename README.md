@@ -1,9 +1,11 @@
 # G-Scores
 
+A full-stack web application to look up and visualize 2024 National High School Examination (THPT) scores in Vietnam.
+
+Check out the live application here: **[g-scores-2024.vercel.app](https://g-scores-2024.vercel.app/)**
+
 > **NOTE FOR REVIEWERS REGARDING DATASET:**  
 > To provide the fastest and most reliable evaluation experience, the 41MB raw CSV dataset (`diem_thi_thpt_2024.csv`) has been intentionally committed into the repository at `backend/src/seeds/dataset/`. This ensures that you can spin up the entire application (including database seeding) in one click without needing to download external files, configure paths, or encounter network timeouts.
-
-A full-stack web application to look up and visualize 2024 National High School Examination (THPT) scores in Vietnam.
 
 ## Screenshots
 
