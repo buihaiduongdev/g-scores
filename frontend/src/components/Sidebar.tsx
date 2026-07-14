@@ -55,10 +55,10 @@ export function Sidebar({
 
         <div className="h-20 flex items-center justify-between px-8 border-b border-white/10 relative z-10">
           <div className="flex items-center gap-3">
-            <div className="bg-lineaer-to-tr from-indigo-500 to-cyan-400 p-2 rounded-xl shadow-lg shadow-indigo-500/20">
+            <div className="bg-gradient-to-tr from-indigo-500 to-cyan-400 p-2 rounded-xl shadow-lg shadow-indigo-500/20">
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-extrabold tracking-wide bg-clip-text text-transparent bg-lineaer-to-r from-white to-slate-400">
+            <h1 className="text-2xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
               G-Scores
             </h1>
           </div>
