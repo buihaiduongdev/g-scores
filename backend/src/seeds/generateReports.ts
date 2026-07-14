@@ -91,9 +91,9 @@ const run = async () => {
       process.exit(1);
     }
 
-    // 2. Check if a valid cache already exists (validate top_group_a has exactly 10 entries)
+    // 2. Check if a valid cache already exists (non-empty data array)
     const validCache = await ReportCache.findOne({ reportType: "top_group_a" });
-    if (validCache && validCache.data && validCache.data.length === 10) {
+    if (validCache && validCache.data && validCache.data.length > 0) {
       console.log("Reports skipped: Valid cache already exists.");
       process.exit(0);
     }
